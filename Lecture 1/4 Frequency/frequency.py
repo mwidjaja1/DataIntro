@@ -11,17 +11,16 @@ if __name__ == '__main__':
     # These variables represent the file inputs from the terminal
     tweetFile = open(sys.argv[1])
     
-    # --- Create Dictionary to track values ---
-    # This creates a dictionary which will pair termHits per term
-    
+    # --- Create List & Dictionary to track values ---
+    # This creates a list & dictionary which will pair termHits per term
+    termList = []
+    termDict = {}
+    wordCount = 0
     
     # --- Analysis of File ---
-    # We convert each (JSON) line of the tweet file into a dict format. From there, 
-    #   we run an if-statement to see if there is a tweet in a given line. If a tweet
-    #   does not exist in the file, we go to line 63 & load up the next line.
+    # We convert each (JSON) line of the tweet file into a dict format.
     for line in tweetFile:
         tweetLine = json.loads(line)
-        tweetScore = 0
         
         # --- For Line, If Text: Saving of Tweet ---
         # If there is a tweet in the given file, we save the tweet as tweetLine.
@@ -30,24 +29,28 @@ if __name__ == '__main__':
             tweetLine = tweetLine.encode('utf-8')
             tweetList = tweetLine.split()
         
-            
-            
-            
-            # --- For Line, If Text: Computing Unmatched Values ---
-            # We then take the list of words which were not caught (and removed) from the
-            # tweet, and assign the previous tweetScore to it for the newDict. If a word
-            # is already in the newDict, we average the tweetScores thus far.
+            # --- For Line, If Text: Adding values to termDict & termList ---
+            # We then see if the word is in termList (and thus, termDict). If so, we add
+            # another mention of said word to termDict. If not, we add the new term to
+            # both termDict & termList.
             for word in tweetList:
-                termFreq = tweetList.count(word)
+                wordCount = wordCount + 1
+                termFreq = termList.count(word)
                 if termFreq != 0:
-                    newDict[new] = (tweetScore + newDict[new])/2
+                    termDict[word] = termDict[word] + 1
                 else:
-                    newDict[new] = tweetScore
+                    termDict[word] = 1
+                    termList.append(word)
             
        
-       # --- If No Text, Print Tweet Score ---
+       # --- If No Text, Move to next Tweet ---
         else:
-            print tweetScore
+            continue
     
     # --- Closes TweetFile ---
     tweetFile.close()
+    
+    # --- Calculate Ratios in termDict & Prints Values ---
+    for word in termDict:
+        termDict[word] = termDict[word]/wordCount
+        print word, termDict[word]
