@@ -39,6 +39,7 @@ if __name__ == '__main__':
     for line in tweetFile:
         tweetLine = json.loads(line)
         tweetScore = 0
+        print tweetLine
         
         # --- For Line, If Text: Saving of Tweet ---
         # If there is a tweet in the given file, we save the tweet as tweetLine.

@@ -1,7 +1,7 @@
 import sys
 import json
 
-""" -- Matthew Widjaja: Project 1, Part 4 --
+""" -- Matthew Widjaja: Project 1, Part 5 --
     Looks at a series of tweets in order to determine which state is the happiest.
 """   
 
@@ -22,19 +22,45 @@ if __name__ == '__main__':
     # --- Tweets File ---
     # This loads up the file with the Tweets
     tweetFile = tweet_file
-    tweetLocation = []
-    tweetScores = []
+    tweetSTs = {}
+    tweetScores = {}
     
-    # --- Keeping Tweets with Location Data ---
-    # This code keeps the tweets with location data that places it in USA. All other
-    # tweets are removed from tweetLibrary. This removes deleted tweets as a result.
+    # --- Loads Up File ---
+    # This code saves all coordinates from tweets with said data.
     for line in tweetFile:
         tweetLine = json.loads(line)
+        tweetScore = 0
         
-        if 'coordinates' in tweetLine:
-            
-    
-    
-# Paste in Analysis of File, and all sections below
-    
+        # --- Save Tweet Data ---
+        if 'text' in tweetLine:
+            tweetText = tweetLine['text']
+            tweetText = tweetText.encode('utf-8')
+            tweetText = tweetText.split()
+        
+            # --- Save Place Data ---
+            if 'place' in tweetLine:
+                place = tweetLine['place']
+                if place:
+                    if place['country_code'] == 'US':
+                        tweetST = place['full_name']
+                        tweetST = tweetST[-2:]
+                        if tweetST != 'SA':
+                            if 'tweetST' in tweetSTs:
+                                tweetSTs['tweetST'] = tweetSTs['tweetST'] + 1
+                            else:
+                                tweetSTs['tweetST'] = 1
+                    
+                 # --- Analysis of Tweet ---
+                        for term in scores:
+                            termFreq = tweetText.count(term)
+                            if termFreq != 0:
+                                tweetScore = (termFreq * scores[term]) + tweetScore
+                                if tweetScores[tweetST]:
+                                    tweetScores[tweetST] = tweetScores[tweetST] + tweetScore
+                                else:
+                                    tweetScores[tweetST] = 0        
+                   
+
+
+    # Paste in Analysis of File, and all sections below
     tweetFile.close()
