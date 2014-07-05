@@ -2,7 +2,7 @@ import sys
 import json
 
 """ -- Matthew Widjaja: Project 1, Part 6 --
-    Looks at a series of tweets to determine which hashtags are the most popular.
+    Looks at a series of tweets to determine the top 10 hashtags.
 """   
 
 if __name__ == '__main__':  
