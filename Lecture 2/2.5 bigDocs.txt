@@ -1,0 +1,11 @@
+sqlite3
+.open reuters.db
+.databases			# Displays Databases
+.tables				# Displays Tables
+PRAGMA table_info(Frequency);	# Displays Column Names
+select * from Frequency;	# Make sure Table’s Loaded
+SELECT count (*) FROM (SELECT SUM(count) AS “x” FROM Frequency GROUP BY docid HAVING “x”>300);
+
+——
+
+RESULT: 107
